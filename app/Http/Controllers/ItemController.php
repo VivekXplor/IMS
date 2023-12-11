@@ -15,7 +15,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return new ItemCollection(Item::all());
+        return new ItemCollection(Item::paginate());
     }
 
     /**
