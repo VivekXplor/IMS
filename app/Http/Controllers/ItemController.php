@@ -13,23 +13,25 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        return Item::paginate();
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    // public function create()
+    // {
+    //     $item = Item::create($request->all());
+    //     return response()->json($item, 201);
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreItemRequest $request)
     {
-        //
+        $item = Item::create($request->all());
+        return response()->json($item, 201);
     }
 
     /**
@@ -37,23 +39,24 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+        return $item;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Item $item)
-    {
-        //
-    }
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  */
+    // public function edit(Item $item)
+    // {
+        
+    // }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateItemRequest $request, Item $item)
     {
-        //
+        $item->update($request->all());
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -61,6 +64,7 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        //
+        $item->delete();
+        return response()->json(['success' => true]);
     }
 }
