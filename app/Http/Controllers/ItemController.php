@@ -9,6 +9,7 @@ use App\Http\Resources\ItemCollection;
 use App\Http\Resources\ItemResource;
 use App\Models\User;
 use Mail;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ItemController extends Controller
 {
@@ -17,7 +18,11 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return new ItemCollection(Item::paginate());
+        $items = QueryBuilder::for(Item::class)
+            ->allowedFilters('name')
+            ->defaultSort('created_at')
+            ->paginate();
+        return new ItemCollection($items);
     }
 
     /**

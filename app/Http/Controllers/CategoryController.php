@@ -7,6 +7,8 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
+use Spatie\QueryBuilder\QueryBuilder;
+
 class CategoryController extends Controller
 {
     /**
@@ -14,7 +16,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return new CategoryCollection(Category::paginate());
+        $categories = QueryBuilder::for(Category::class)
+            ->allowedFilters('name')
+            ->defaultSort('created_at')
+            ->paginate();
+        return new CategoryCollection($categories);
     }
 
     // /**
