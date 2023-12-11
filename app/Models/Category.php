@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Item;
 
 class Category extends Model
 {
@@ -19,5 +20,10 @@ class Category extends Model
     protected $fillable = [
         'name',
         'description',
-    ];        
+    ];
+
+    // public function items()
+    // {
+    //     return $this->belongsToMany(Item::class);
+    // }
 }

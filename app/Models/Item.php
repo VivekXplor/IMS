@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Category;
 
 class Item extends Model
 {
@@ -21,5 +22,11 @@ class Item extends Model
         'description',
         'price',
         'quantity',
-    ];    
+    ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
 }
