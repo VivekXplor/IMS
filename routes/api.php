@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,21 +17,15 @@ use App\Http\Controllers\ItemController;
 |
 */
 
+Route::post('/login', [AuthController::class, 'login']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
-// Route::group(['middleware' => 'auth:sanctum'], function()
-// {
-//     Route::apiResources([
-//         'categories' => CategoryController::class,
-//         'items' => ItemController::class,
-//     ]);
-// });
-
-Route::apiResources([
-    'categories' => CategoryController::class,
-    'items' => ItemController::class,
-]);
+Route::middleware('auth:sanctum')->group(function(){
+    Route::apiResources([
+        'categories' => CategoryController::class,
+        'items' => ItemController::class,
+    ]);
+});
