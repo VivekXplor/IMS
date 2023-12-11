@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
+use App\Http\Resources\ItemCollection;
+use App\Http\Resources\ItemResource;
+use App\Models\User;
+use Mail;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ItemController extends Controller
 {
@@ -13,7 +18,11 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return Item::paginate();
+        $items = QueryBuilder::for(Item::class)
+            ->allowedFilters('name')
+            ->defaultSort('created_at')
+            ->paginate();
+        return new ItemCollection($items);
     }
 
     /**
@@ -31,7 +40,17 @@ class ItemController extends Controller
     public function store(StoreItemRequest $request)
     {
         $item = Item::create($request->all());
-        return response()->json($item, 201);
+        $usersMail = User::select('email')->get();
+        $emails = [];
+        foreach($usersMail as $mail){
+            $emails[] = $mail['email'];
+        }
+
+        Mail::send('item_created',[], function($message) use ($emails){
+            $message->to($emails)->subject("Regarding Item Creation");
+        });
+
+        return new ItemResource($item);
     }
 
     /**
@@ -39,7 +58,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return $item;
+        return new ItemResource($item);
     }
 
     // /**
@@ -56,7 +75,17 @@ class ItemController extends Controller
     public function update(UpdateItemRequest $request, Item $item)
     {
         $item->update($request->all());
-        return response()->json(['success' => true]);
+        $usersMail = User::select('email')->get();
+        $emails = [];
+        foreach($usersMail as $mail){
+            $emails[] = $mail['email'];
+        }
+
+        Mail::send('item_updated',[], function($message) use ($emails){
+            $message->to($emails)->subject("Regarding Item Updation");
+        });
+
+        return new ItemResource($item);
     }
 
     /**
@@ -65,6 +94,16 @@ class ItemController extends Controller
     public function destroy(Item $item)
     {
         $item->delete();
+        $usersMail = User::select('email')->get();
+        $emails = [];
+        foreach($usersMail as $mail){
+            $emails[] = $mail['email'];
+        }
+
+        Mail::send('item_deleted',[], function($message) use ($emails){
+            $message->to($emails)->subject("Regarding Item Deletion");
+        });
+
         return response()->json(['success' => true]);
     }
 }

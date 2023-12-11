@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\CategoryResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class CategoryController extends Controller
 {
@@ -13,7 +16,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::paginate();
+        $categories = QueryBuilder::for(Category::class)
+            ->allowedFilters('name')
+            ->defaultSort('created_at')
+            ->paginate();
+        return new CategoryCollection($categories);
     }
 
     // /**
@@ -30,7 +37,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $category = Category::create($request->all());
-        return response()->json($category, 201);
+        return new CategoryResource($category);
     }
 
     /**
@@ -38,7 +45,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return $category;
+        return new CategoryResource($category);
     }
 
     // /**
@@ -55,7 +62,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update($request->all());
-        return response()->json(['success' => true]);
+        return new CategoryResource($category);
     }
 
     /**
