@@ -25,7 +25,7 @@ class UpdateItemRequest extends FormRequest
             'name' => 'sometimes|unique:items|max:255',
             'description' => 'sometimes',
             'price' => 'sometimes|numeric|gt:0',
-            'quantity' => 'sometimes',
+            'quantity' => 'sometimes|numeric|gt:0',
         ];
     }
 }
