@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
+use App\Http\Resources\ItemCollection;
+use App\Http\Resources\ItemResource;
 
 class ItemController extends Controller
 {
@@ -13,7 +15,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return Item::paginate();
+        return new ItemCollection(Item::all());
     }
 
     /**
@@ -31,7 +33,7 @@ class ItemController extends Controller
     public function store(StoreItemRequest $request)
     {
         $item = Item::create($request->all());
-        return response()->json($item, 201);
+        return new ItemResource($item);
     }
 
     /**
@@ -39,7 +41,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return $item;
+        return new ItemResource($item);
     }
 
     // /**
@@ -56,7 +58,7 @@ class ItemController extends Controller
     public function update(UpdateItemRequest $request, Item $item)
     {
         $item->update($request->all());
-        return response()->json(['success' => true]);
+        return new ItemResource($item);
     }
 
     /**

@@ -20,6 +20,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+
+// Route::group(['middleware' => 'auth:sanctum'], function()
+// {
+//     Route::apiResources([
+//         'categories' => CategoryController::class,
+//         'items' => ItemController::class,
+//     ]);
+// });
+
 Route::apiResources([
     'categories' => CategoryController::class,
     'items' => ItemController::class,
