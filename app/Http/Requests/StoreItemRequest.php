@@ -23,9 +23,10 @@ class StoreItemRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:items|max:255',
+            'categories' => 'sometimes',
             'description' => 'required',
             'price' => 'required|numeric|gt:0',
-            'quantity' => 'required|numeric|gt:0',
+            'quantity' => 'required|numeric|gt:0'
         ];
     }
 }

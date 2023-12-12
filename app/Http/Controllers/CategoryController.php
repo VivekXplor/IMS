@@ -23,14 +23,6 @@ class CategoryController extends Controller
         return new CategoryCollection($categories);
     }
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  */
-    // public function create()
-    // {
-    //     //
-    // }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -47,14 +39,6 @@ class CategoryController extends Controller
     {
         return new CategoryResource($category);
     }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(Category $category)
-    // {
-    //     //
-    // }
 
     /**
      * Update the specified resource in storage.
