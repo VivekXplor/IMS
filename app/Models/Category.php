@@ -22,8 +22,8 @@ class Category extends Model
         'description',
     ];
 
-    // public function items()
-    // {
-    //     return $this->belongsToMany(Item::class);
-    // }
+    public function items()
+    {
+        return $this->belongsToMany(Item::class);
+    }
 }

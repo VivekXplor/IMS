@@ -26,30 +26,29 @@ class ItemController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    // public function create()
-    // {
-    //     $item = Item::create($request->all());
-    //     return response()->json($item, 201);
-    // }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreItemRequest $request)
     {
+        $categories = $request->categories;
         $item = Item::create($request->all());
+        $item->save();
+        $item->categories()->attach($categories);
         $usersMail = User::select('email')->get();
         $emails = [];
         foreach($usersMail as $mail){
             $emails[] = $mail['email'];
         }
 
-        Mail::send('item_created',[], function($message) use ($emails){
-            $message->to($emails)->subject("Regarding Item Creation");
-        });
-
+        // try{
+        //     Mail::send('item_created',[], function($message) use ($emails){
+        //         $message->to($emails)->subject("Regarding Item Creation");
+        //     });
+        // }
+        // catch(Exception $e){
+        //     // return response($e->getMessage(), 422);
+        //     Log::info('Regarding Item Creation Email Failed.');
+        // }
         return new ItemResource($item);
     }
 
@@ -61,19 +60,13 @@ class ItemController extends Controller
         return new ItemResource($item);
     }
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(Item $item)
-    // {
-        
-    // }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateItemRequest $request, Item $item)
     {
+        $categories = $request->categories;
+        $item->categories()->sync($categories);
         $item->update($request->all());
         $usersMail = User::select('email')->get();
         $emails = [];
@@ -81,10 +74,15 @@ class ItemController extends Controller
             $emails[] = $mail['email'];
         }
 
-        Mail::send('item_updated',[], function($message) use ($emails){
-            $message->to($emails)->subject("Regarding Item Updation");
-        });
-
+        // try{
+        //     Mail::send('item_updated',[], function($message) use ($emails){
+        //         $message->to($emails)->subject("Regarding Item Updation");
+        //     });
+        // }
+        // catch(Exception $e){
+        //     // return response($e->getMessage(), 422);
+        //     Log::info('Regarding Item Updation Email Failed.');
+        // }
         return new ItemResource($item);
     }
 
@@ -100,10 +98,15 @@ class ItemController extends Controller
             $emails[] = $mail['email'];
         }
 
-        Mail::send('item_deleted',[], function($message) use ($emails){
-            $message->to($emails)->subject("Regarding Item Deletion");
-        });
-
+        // try{
+        //     Mail::send('item_deleted',[], function($message) use ($emails){
+        //         $message->to($emails)->subject("Regarding Item Deletion");
+        //     });
+        // }
+        // catch(Exception $e){
+        //     // return response($e->getMessage(), 422);
+        //     Log::info('Regarding Item Deletion Email Failed.');
+        // }
         return response()->json(['success' => true]);
     }
 }
