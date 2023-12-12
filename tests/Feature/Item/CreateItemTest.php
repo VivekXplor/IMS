@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Feature\Item;
 
 use Tests\TestCase;
 use Illuminate\Database\Eloquent\Factories\Factory;
