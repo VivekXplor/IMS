@@ -19,16 +19,10 @@ class CreateItemTest extends TestCase
         $item = Item::factory()->make();
         $response = $this->post('/api/items',$item->toArray());
         $this->assertEquals(201, $response->getStatusCode());
-        // $this->assertDatabaseHas('items', [
-        //     'id' => $this->item->id
-        // ]);
-
     }
 
 
-    public function item_requires_a_name(){
-
-        //Given we have an authenticated user
+    public function test_item_requires_a_name(){
         $user = User::factory()->create();
         $this->actingAs($user);
         $item = Item::factory()->make(['name' => null]);
@@ -37,12 +31,26 @@ class CreateItemTest extends TestCase
     }
     
     public function test_item_requires_a_description(){
-    
-        //Given we have an authenticated user
         $user = User::factory()->create();
         $this->actingAs($user);
         $item = Item::factory()->make(['description' => null]);    
         $this->post('/api/items',$item->toArray())
             ->assertSessionHasErrors('description');
-    }    
+    }
+
+    public function test_item_requires_a_price(){
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $item = Item::factory()->make(['price' => null]);    
+        $this->post('/api/items',$item->toArray())
+            ->assertSessionHasErrors('price');
+    }
+
+    public function test_item_requires_a_quantity(){
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $item = Item::factory()->make(['quantity' => null]);    
+        $this->post('/api/items',$item->toArray())
+            ->assertSessionHasErrors('quantity');
+    }
 }
