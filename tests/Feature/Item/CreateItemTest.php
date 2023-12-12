@@ -4,11 +4,13 @@ namespace Tests;
 
 use Tests\TestCase;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\User;
 use App\Models\Item;
 
 class CreateItemTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic unit test example.
      */
