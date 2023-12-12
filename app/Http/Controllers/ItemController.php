@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Category;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 use App\Http\Resources\ItemCollection;
@@ -33,7 +34,10 @@ class ItemController extends Controller
         $categories = $request->categories;
         $item = Item::create($request->all());
         $item->save();
-        $item->categories()->attach($categories);
+        $categories_exist = Category::first();
+        if($categories_exist){
+            $item->categories()->attach($categories);
+        }
         $usersMail = User::select('email')->get();
         $emails = [];
         foreach($usersMail as $mail){
@@ -66,7 +70,10 @@ class ItemController extends Controller
     public function update(UpdateItemRequest $request, Item $item)
     {
         $categories = $request->categories;
-        $item->categories()->sync($categories);
+        $categories_exist = Category::first();
+        if($categories_exist){
+            $item->categories()->sync($categories);
+        }
         $item->update($request->all());
         $usersMail = User::select('email')->get();
         $emails = [];
