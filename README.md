@@ -14,10 +14,9 @@ Submit bug reports and feature suggestions, or track changes in the
 - Requirements
 - Recommended modules
 - API consumption
-- Installation
-- Configuration
-- Troubleshooting
-- FAQ
+- User login and registration
+- Items
+- Categories
 - Maintainers
 
 
@@ -300,3 +299,8 @@ A successful DELETE request typically returns a 200 OK, 202 Accepted, or 204 No 
 Request Headers
 Authorization
 Bearer 4|pufKLPBL1UiSzUz3rkO3pVizW5ZafZgBfjSGJY1V3b57
+
+
+
+# Maintainers
+- Vivek Lode (Software Engineer)
