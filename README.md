@@ -1,12 +1,12 @@
-# Xplor Inventory Management System
+#  Inventory Management System
 
-The XIMS (Xplor Inventory Management System) is created for consuming REST APIs of items and categories and manage their associtation between them securely. 
+The IMS ( Inventory Management System) is created for consuming REST APIs of items and categories and managing their association between them securely. 
 
 For a full description of the module, visit the
-[project page](https://github.com/VivekXplor/XIMS).
+[project page](https://github.com/Vivek/IMS).
 
 Submit bug reports and feature suggestions, or track changes in the
-[issue queue](https://github.com/VivekXplor/XIMS/issues).
+[issue queue](https://github.com/Vivek/IMS/issues).
 
 
 ## Table of contents
